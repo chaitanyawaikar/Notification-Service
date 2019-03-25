@@ -1,8 +1,12 @@
 # Notification Service Application
 
 This is a notification service that performs two activities
-1. Send a welcome email template to the imaginary mail server when new user is created
-2. Send the newsletters to the subscribed users by loading the templates from the template-service and fetching users from the user-service
+1. Send a welcome email template to the imaginary mail server when new user is created. Whenever a new user is created, a POST call is made to this service which fetches the template from the template-service and prints the user-enriched template onto the screen. 
+
+Please note that printing on the screen is analogous to sending it to a mail server. 
+
+
+2. Send the newsletters to the subscribed users by loading the templates from the template-service and fetching users from the user-service. Templates are enriched with user data and are printed on the screen in batches of 10
 
 ## How to run the application
 
@@ -27,8 +31,14 @@ There are two endpoints
 
 #### Tech Debt
 
-Unit test cases missing for a lot of files
+1) Unit test cases missing for all files
 
-/newsletter to include provision for template key and template id
+2) /newsletter to include provision for template key and template id
 
-Messaging queue to be used from where notification services will be triggered instead of calling them directly 
+3) Messaging queue to be used from where notification services will be triggered instead of calling them directly from user-service.
+
+4) Messaging queue to be used instead of printing the newsletter in batches onto the screen.
+
+5) Making a parallel call to user service and template service and then combining the data.
+
+6) Making the call to fetch all users using stream api of the WSClient library. This will ensure that the huge list of users does not consume all resources of the http thread pool.
