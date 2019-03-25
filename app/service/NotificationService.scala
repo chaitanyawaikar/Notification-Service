@@ -24,7 +24,7 @@ class NotificationService @Inject()(
         println(enrichedTemplate)
         Right(enrichedTemplate)
       case None =>
-        Left("Did not get template")
+        Left(TEMPLATE_NOT_FOUND_BY_KEY)
     }
   }
 
@@ -36,7 +36,7 @@ class NotificationService @Inject()(
             sendBatchNotifications(template, users)
             Right(template.template)
           case None =>
-            Left("Did not get template")
+            Left(TEMPLATE_NOT_FOUND_BY_KEY)
         }
       case _ =>
         Future.successful(Left(""))
